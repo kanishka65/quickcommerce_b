@@ -3,6 +3,16 @@ from flask import Flask, jsonify
 from config import Config
 from extensions import mongo, jwt, bcrypt
 from flask_cors import CORS
+import os
+
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    print("ENV MONGO_URI:", os.environ.get("MONGO_URI"))   # Check actual env
+    print("Config MONGO_URI:", app.config.get("MONGO_URI"))
+
+    # Rest of your code...
 
 def create_app():
     app = Flask(__name__)
