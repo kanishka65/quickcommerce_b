@@ -1,5 +1,4 @@
 # app.py
-import os
 from flask import Flask, jsonify
 from config import Config
 from extensions import mongo, jwt, bcrypt
@@ -9,10 +8,10 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     
-    # Enable debug mode (optional on Render, can turn off later)
+    # Enable debug mode
     app.debug = True
     
-    # Enable CORS for your Vercel frontend
+    # Enable CORS - allow only your Vercel frontend
     CORS(app, origins=["https://quickcommerce-f.vercel.app"])
     
     print("Initializing MongoDB connection...")
@@ -50,10 +49,8 @@ def create_app():
     
     return app
 
-# Create the app
 app = create_app()
 
-# Only run locally with Flask
 if __name__ == '__main__':
-    # Use host='0.0.0.0' so Render can access it
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+    # For Render deployment, don't bind to localhost
+    app.run(debug=True)
